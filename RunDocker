@@ -1,0 +1,25 @@
+#!/bin/bash
+
+export SQUEEZE_DATA="/Volumes/Data/Squeezebox"
+export MUSIC_DIR="/Volumes/Multimedia/Music"
+
+# debug
+echo ${SQUEEZE_DATA}
+ls ${SQUEEZE_DATA}
+echo
+echo ${MUSIC_DIR}
+ls ${MUSIC_DIR}
+
+
+# start LMS Docker container
+docker run -d --init \
+           -p 9000:9000 \
+           -p 9090:9090 \
+           -p 3483:3483 \
+           -p 3483:3483/udp \
+           -v /etc/localtime:/etc/localtime:ro \
+           -v ${SQUEEZE_DATA}:/srv/squeezebox \
+           -v ${MUSIC_DIR}:/srv/music \
+           lms
+
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#export PKG_URL="http://www.mysqueezebox.com/update/?version=7.9.0&revision=1&geturl=1&os=debamd64"
+export PKG_URL="http://www.mysqueezebox.com/update/?version=7.9&revision=1&geturl=1&os=debamd64"
+echo "PKG_URL: ${PKG_URL}"
+echo
+
+export URL=`curl ${PKG_URL}`
+echo "curl done, URL: $URL"
+echo
+
+echo "parse string with sed"
+export FINAL_URL=`echo $URL | sed 's/_all\.deb/_amd64\.deb/'`
+echo "done, FINAL_URL: $FINAL_URL"

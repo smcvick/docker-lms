@@ -1,26 +1,27 @@
 #!/bin/bash
 
 # image name should be passed as arg, along with W/M tag for OS
-if [ "$#" -ne 2 ]; then
-  echo "Usage: RunDocker <image_name> <W/M>"
+if [ "$#" -ne 1 ]; then
+  echo "Usage: RunDocker <image_name>"
   exit
 else
   # parse args
   export IMG_NAME="$1"
-  export OS_FLAG="$2" 
 fi
 
+#export OSTYPE="darwin17"
+
 # set appropriate paths based on OS
-if [ "$OS_FLAG" == "W" ] || [ "$OS_FLAG" == "w" ]; then
+if [[ "$OSTYPE" == "msys" ]]; then
   # windows
   export SQUEEZE_DATA="N:/Squeezebox"
   export MUSIC_DIR="M:/Music"
-elif [ "$OS_FLAG" == "M" ] || [ "$OS_FLAG" == "m" ]; then
+elif [[ "$OSTYPE" =~ ^darwin.* ]]; then
   # mac
   export SQUEEZE_DATA="/Volumes/Data/Squeezebox"
   export MUSIC_DIR="/Volumes/Multimedia/Music"
 else
-  echo "Invalid OS flag, exiting"
+  echo "OS flag script doesn't know, exiting now"
   exit
 fi
 
@@ -36,8 +37,8 @@ docker run -d --init \
            -p 9090:9090 \
            -p 3483:3483 \
            -p 3483:3483/udp \
-           -v /etc/localtime:/etc/localtime:ro \
            -v ${SQUEEZE_DATA}:/srv/squeezebox \
            -v ${MUSIC_DIR}:/srv/music \
            ${IMG_NAME}
 
+#          -v /etc/localtime:/etc/localtime:ro \

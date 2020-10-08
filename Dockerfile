@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
-MAINTAINER Sean McVicker <smcvick.c@gmail.com>
+LABEL maintainer="Sean McVicker <smcvick.c@gmail.com>"
 
-ENV SQUEEZE_VOL /srv/squeezebox
+# a couple environment variables
 ENV LANG C.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -32,7 +32,11 @@ RUN pkg_url=$(curl "$PACKAGE_VERSION_URL") && \
 # This will be created by the entrypoint script.
 RUN userdel squeezeboxserver
 
+# where does Squeezebox data live in container, referenced here and in .sh scripts
+ENV SQUEEZE_VOL /srv/squeezebox
 VOLUME $SQUEEZE_VOL
+
+# make sure ports are accessible
 EXPOSE 3483 3483/udp 9000 9090
 
 # scripting setup

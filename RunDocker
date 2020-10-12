@@ -9,8 +9,6 @@ else
   export IMG_NAME="$1"
 fi
 
-#export OSTYPE="darwin17"
-
 # set appropriate paths based on OS
 if [[ "$OSTYPE" == "msys" ]]; then
   # windows
@@ -21,7 +19,7 @@ elif [[ "$OSTYPE" =~ ^darwin.* ]]; then
   export SQUEEZE_DATA="/Volumes/Data/Squeezebox"
   export MUSIC_DIR="/Volumes/Multimedia/Music"
 else
-  echo "OS flag script doesn't know, exiting now"
+  echo "OS type that this script doesn't know how to handle, exiting now: $OSTYPE"
   exit
 fi
 

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Script intended for use when testing image from command line, avoids need 
+# to type in complex 'docker run' command. 
+#
+# NOTE: attempts to set data & music dirs based on local OS
+
 # image name should be passed as arg, along with W/M tag for OS
 if [ "$#" -ne 1 ]; then
   echo "Usage: RunDocker <image_name>"
